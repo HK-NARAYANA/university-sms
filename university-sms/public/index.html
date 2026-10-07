@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrar — University Student Management System</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">R</div>
+      <div class="brand-text">
+        <div class="name">Registrar</div>
+        <div class="sub">Records System</div>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <div class="nav-item active" data-view="dashboard"><span class="num">00</span> Dashboard</div>
+      <div class="nav-item" data-view="enrollment"><span class="num">01</span> Enrollment</div>
+      <div class="nav-item" data-view="scheduling"><span class="num">02</span> Scheduling</div>
+      <div class="nav-item" data-view="faculty"><span class="num">03</span> Faculty</div>
+    </nav>
+
+    <div class="sidebar-foot">
+      University SMS<br>
+      Fall 2026 term
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- ============ DASHBOARD ============ -->
+    <section class="view active" id="view-dashboard">
+      <div class="page-head">
+        <div class="eyebrow">Overview</div>
+        <h1>Registrar Dashboard</h1>
+        <p class="page-desc">A snapshot of enrollment, scheduling, and faculty records across the institution.</p>
+      </div>
+
+      <div class="stat-grid" id="stat-grid">
+        <div class="stat-card"><div class="n">—</div><div class="l">Active students</div></div>
+        <div class="stat-card"><div class="n">—</div><div class="l">Active faculty</div></div>
+        <div class="stat-card"><div class="n">—</div><div class="l">Courses in catalog</div></div>
+        <div class="stat-card"><div class="n">—</div><div class="l">Offerings this term</div></div>
+        <div class="stat-card"><div class="n">—</div><div class="l">Active enrollments</div></div>
+      </div>
+
+      <div class="section-title">Recent enrollments</div>
+      <div class="panel">
+        <table>
+          <thead><tr><th>Student</th><th>Course</th><th>Term</th><th>Status</th><th>Grade</th></tr></thead>
+          <tbody id="dash-enrollments"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ ENROLLMENT MODULE ============ -->
+    <section class="view" id="view-enrollment">
+      <div class="page-head">
+        <div class="eyebrow">Module 01</div>
+        <h1>Enrollment Tracking</h1>
+        <p class="page-desc">Maintain the student roster and manage registration into scheduled course offerings.</p>
+      </div>
+
+      <div class="subtabs" id="enrollment-subtabs">
+        <div class="subtab active" data-sub="students">Students</div>
+        <div class="subtab" data-sub="enrollments">Enrollment records</div>
+      </div>
+
+      <!-- Students subtab -->
+      <div class="subview active" id="sub-students">
+        <div class="filters">
+          <input type="text" id="student-search" placeholder="Search name or student number…">
+        </div>
+        <div class="form-toggle"><button class="btn" id="toggle-student-form">+ New student</button></div>
+        <div class="form-panel" id="student-form-panel">
+          <div class="form-grid">
+            <div class="field"><label>Student number</label><input id="f-student-number" placeholder="S2026001"></div>
+            <div class="field"><label>First name</label><input id="f-student-first"></div>
+            <div class="field"><label>Last name</label><input id="f-student-last"></div>
+            <div class="field"><label>Email</label><input id="f-student-email" type="email"></div>
+            <div class="field"><label>Major department</label><select id="f-student-dept"></select></div>
+            <div class="field"><label>Enrollment year</label><input id="f-student-year" type="number" placeholder="2026"></div>
+            <div class="field"><label>Standing</label>
+              <select id="f-student-standing">
+                <option value="freshman">Freshman</option>
+                <option value="sophomore">Sophomore</option>
+                <option value="junior">Junior</option>
+                <option value="senior">Senior</option>
+                <option value="graduate">Graduate</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" id="submit-student">Save student</button>
+            <button class="btn secondary" id="cancel-student">Cancel</button>
+          </div>
+          <div class="form-msg" id="student-form-msg"></div>
+        </div>
+
+        <div class="panel">
+          <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Department</th><th>Standing</th><th>Status</th><th></th></tr></thead>
+            <tbody id="students-table"><tr class="empty-row"><td colspan="6">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Enrollments subtab -->
+      <div class="subview" id="sub-enrollments" style="display:none;">
+        <div class="form-toggle"><button class="btn" id="toggle-enrollment-form">+ Enroll student</button></div>
+        <div class="form-panel" id="enrollment-form-panel">
+          <div class="form-grid">
+            <div class="field"><label>Student</label><select id="f-enroll-student"></select></div>
+            <div class="field"><label>Course offering</label><select id="f-enroll-schedule"></select></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" id="submit-enrollment">Enroll</button>
+            <button class="btn secondary" id="cancel-enrollment">Cancel</button>
+          </div>
+          <div class="form-msg" id="enrollment-form-msg"></div>
+        </div>
+
+        <div class="panel">
+          <table>
+            <thead><tr><th>Student</th><th>Course</th><th>Term</th><th>Status</th><th>Grade</th><th></th></tr></thead>
+            <tbody id="enrollments-table"><tr class="empty-row"><td colspan="6">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCHEDULING MODULE ============ -->
+    <section class="view" id="view-scheduling">
+      <div class="page-head">
+        <div class="eyebrow">Module 02</div>
+        <h1>Course Scheduling</h1>
+        <p class="page-desc">Manage the course catalog and place offerings on the term calendar with room, time, and instructor assignments.</p>
+      </div>
+
+      <div class="subtabs" id="scheduling-subtabs">
+        <div class="subtab active" data-sub="courses">Course catalog</div>
+        <div class="subtab" data-sub="offerings">Term offerings</div>
+      </div>
+
+      <!-- Courses subtab -->
+      <div class="subview active" id="sub-courses">
+        <div class="form-toggle"><button class="btn" id="toggle-course-form">+ New course</button></div>
+        <div class="form-panel" id="course-form-panel">
+          <div class="form-grid">
+            <div class="field"><label>Course code</label><input id="f-course-code" placeholder="CS-450"></div>
+            <div class="field"><label>Title</label><input id="f-course-title"></div>
+            <div class="field"><label>Credits</label><input id="f-course-credits" type="number" min="1" max="6"></div>
+            <div class="field"><label>Department</label><select id="f-course-dept"></select></div>
+            <div class="field" style="grid-column:1/-1;"><label>Description</label><textarea id="f-course-desc" rows="2"></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" id="submit-course">Save course</button>
+            <button class="btn secondary" id="cancel-course">Cancel</button>
+          </div>
+          <div class="form-msg" id="course-form-msg"></div>
+        </div>
+
+        <div class="panel">
+          <table>
+            <thead><tr><th>Code</th><th>Title</th><th>Credits</th><th>Department</th><th></th></tr></thead>
+            <tbody id="courses-table"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Offerings subtab -->
+      <div class="subview" id="sub-offerings" style="display:none;">
+        <div class="form-toggle"><button class="btn" id="toggle-offering-form">+ New offering</button></div>
+        <div class="form-panel" id="offering-form-panel">
+          <div class="form-grid">
+            <div class="field"><label>Course</label><select id="f-off-course"></select></div>
+            <div class="field"><label>Instructor</label><select id="f-off-faculty"></select></div>
+            <div class="field"><label>Semester</label>
+              <select id="f-off-semester"><option>Fall</option><option>Spring</option><option>Summer</option></select>
+            </div>
+            <div class="field"><label>Academic year</label><input id="f-off-year" type="number" placeholder="2026"></div>
+            <div class="field"><label>Days</label><input id="f-off-days" placeholder="MWF"></div>
+            <div class="field"><label>Room</label><input id="f-off-room" placeholder="TH-101"></div>
+            <div class="field"><label>Start time</label><input id="f-off-start" type="time"></div>
+            <div class="field"><label>End time</label><input id="f-off-end" type="time"></div>
+            <div class="field"><label>Capacity</label><input id="f-off-capacity" type="number" min="1"></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn" id="submit-offering">Save offering</button>
+            <button class="btn secondary" id="cancel-offering">Cancel</button>
+          </div>
+          <div class="form-msg" id="offering-form-msg"></div>
+        </div>
+
+        <div class="panel">
+          <table>
+            <thead><tr><th>Course</th><th>Term</th><th>Schedule</th><th>Room</th><th>Instructor</th><th>Seats</th><th></th></tr></thead>
+            <tbody id="offerings-table"><tr class="empty-row"><td colspan="7">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FACULTY MODULE ============ -->
+    <section class="view" id="view-faculty">
+      <div class="page-head">
+        <div class="eyebrow">Module 03</div>
+        <h1>Faculty Administration</h1>
+        <p class="page-desc">Maintain faculty records, appointments, and department assignments. Select a name to view current course load.</p>
+      </div>
+
+      <div class="form-toggle"><button class="btn" id="toggle-faculty-form">+ New faculty member</button></div>
+      <div class="form-panel" id="faculty-form-panel">
+        <div class="form-grid">
+          <div class="field"><label>First name</label><input id="f-faculty-first"></div>
+          <div class="field"><label>Last name</label><input id="f-faculty-last"></div>
+          <div class="field"><label>Email</label><input id="f-faculty-email" type="email"></div>
+          <div class="field"><label>Title</label>
+            <select id="f-faculty-title">
+              <option>Professor</option><option>Associate Professor</option>
+              <option>Assistant Professor</option><option>Lecturer</option><option>Adjunct</option>
+            </select>
+          </div>
+          <div class="field"><label>Department</label><select id="f-faculty-dept"></select></div>
+          <div class="field"><label>Hire date</label><input id="f-faculty-hire" type="date"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn" id="submit-faculty">Save faculty member</button>
+          <button class="btn secondary" id="cancel-faculty">Cancel</button>
+        </div>
+        <div class="form-msg" id="faculty-form-msg"></div>
+      </div>
+
+      <div class="panel">
+        <table>
+          <thead><tr><th>Name</th><th>Title</th><th>Department</th><th>Status</th><th></th></tr></thead>
+          <tbody id="faculty-table"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+        </table>
+      </div>
+
+      <div id="faculty-detail" style="display:none;">
+        <div class="section-title" id="faculty-detail-title">Course load</div>
+        <div class="panel">
+          <table>
+            <thead><tr><th>Course</th><th>Term</th><th>Schedule</th><th>Room</th></tr></thead>
+            <tbody id="faculty-load-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
